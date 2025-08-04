@@ -6,7 +6,18 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/01 21:03:40 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/04 19:21:24 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "so_long.h"
+
+int	main(void)
+{
+	void	*mlx;
+	void	*mlx_win;
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "oeoeoe");
+	mlx_loop(mlx);
+}

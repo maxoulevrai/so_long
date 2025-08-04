@@ -1,4 +1,4 @@
-NAME = push_swap
+NAME = so_long
 
 RED				= \e[31m
 GREEN			= \e[32m
@@ -11,28 +11,22 @@ RESET			= \e[m
 LIB = lib/libft.a
 
 SRCS = main.c \
-		sort/sort_algo.c \
-		sort/sort_utils.c \
-		sort/tiny_sort.c \
-		utils/init_utils.c \
-		utils/parsing_utils.c \
-		utils/linked_list_utils.c \
-		utils/instructions/swap_instructions.c \
-		utils/instructions/push_instructions.c \
-		utils/instructions/rotate_instructions.c \
-		utils/instructions/reverse_rotate_instructions.c
 
 OBJS = $(SRCS:%.c=build/%.o)
 DEPS = $(OBJS:.o=.d)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -MMD
+CFLAGS = -Wall -Wextra -Werror
+MLXFLAG = -Lmlx_linux -lmlx -lX11 -lXext
+
+MLX_DIR = mlx_linux/
+MLX_LIB = mlx_linux/libmlx.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIB)
+$(NAME): $(OBJS) $(LIB) $(MLX_LIB)
 	@echo "$(GREEN)Linking $@$(NO_COLOR)"
-	@$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) $(MLXFLAG) -o $@ $^
 	@echo "$(GREEN)Build complete$(NO_COLOR)"
 
 $(LIB):
