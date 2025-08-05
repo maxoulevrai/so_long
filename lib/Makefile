@@ -1,18 +1,30 @@
 LIB = libft.a
 
-RED				= \e[31m
-GREEN			= \e[32m
-YELLOW			= \e[33m
-BLUE			= \e[34m
-MAGENTA			= \e[35m
-CYAN			= \e[36m
-RESET			= \e[m
+RED				= \033[31m
+GREEN			= \033[32m
+YELLOW			= \033[33m
+BLUE			= \033[34m
+MAGENTA			= \033[35m
+CYAN			= \033[36m
+RESET			= \033[0m
 
-LIB_DIR = srcs/
+GNL_DIR = srcs/get_next_line/
+PRINTF_DIR = srcs/printf/
+LIB_DIR = srcs/libft/
 BUILD_DIR = build/
 
-LIB_SRCS = $(LIB_DIR)ft_isalpha.c \
-			$(LIB_DIR)ft_abs.c \
+GNL_SRCS = $(GNL_DIR)get_next_line_utils.c \
+			$(GNL_DIR)get_next_line.c
+
+PRINTF_SRCS = $(PRINTF_DIR)ft_printf.c \
+			$(PRINTF_DIR)utils/ft_putaddyf.c \
+			$(PRINTF_DIR)utils/ft_putcharf.c \
+			$(PRINTF_DIR)utils/ft_putnbr_basef.c \
+			$(PRINTF_DIR)utils/ft_putnbrf.c \
+			$(PRINTF_DIR)utils/ft_putstrf.c
+
+LIB_SRCS = $(LIB_DIR)ft_abs.c \
+			$(LIB_DIR)ft_isalpha.c \
 			$(LIB_DIR)ft_isdigit.c \
 			$(LIB_DIR)ft_isalnum.c \
 			$(LIB_DIR)ft_isascii.c \
@@ -61,21 +73,20 @@ LIB_SRCS = $(LIB_DIR)ft_isalpha.c \
 			$(LIB_DIR)ft_lstdelone.c \
 			$(LIB_DIR)ft_lstclear.c \
 			$(LIB_DIR)ft_lstiter.c \
-			$(LIB_DIR)ft_lstmap.c
+			$(LIB_DIR)ft_lstmap.c 
 
-LIB_OBJS = $(LIB_SRCS:%.c=$(BUILD_DIR)%.o)
+ALL_SRCS = $(LIB_SRCS) $(GNL_SRCS) $(PRINTF_SRCS)
+LIB_OBJS = $(ALL_SRCS:%.c=$(BUILD_DIR)%.o)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g
 AR = ar rcs
 RM = rm -rf
-
-$(LIB_OBJS): | $(BUILD_DIR)
 
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)%.o: %.c
+$(BUILD_DIR)%.o: %.c | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling $<$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -98,4 +109,3 @@ lib_fclean: lib_clean
 re_lib: lib_fclean lib
 
 .PHONY: lib lib_clean lib_fclean re_lib
-

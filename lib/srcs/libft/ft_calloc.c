@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/04/25 12:43:49 by maleca            #+#    #+#             */
+/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../libft.h"
 
-void	so_long(char **av)
+void	*ft_calloc(size_t nmemb, size_t siz)
 {
-	char **map;
+	unsigned char	*ptr;
 
-	map = parse(av);
-
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	if (siz && nmemb > (UINT_MAX / siz))
+		return (NULL);
+	ptr = malloc(nmemb * siz);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, nmemb * siz);
+	return (ptr);
 }

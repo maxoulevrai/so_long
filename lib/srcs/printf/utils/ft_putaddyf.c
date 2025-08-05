@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putaddyf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/05/02 12:15:43 by maleca            #+#    #+#             */
+/*   Updated: 2025/05/03 16:56:38 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../ft_printf.h"
 
-void	so_long(char **av)
+void	ft_putaddyf(unsigned long long adresse, size_t *count)
 {
-	char **map;
-
-	map = parse(av);
-
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	if (!adresse)
+	{
+		ft_putstrf("(nil)", count);
+		return ;
+	}
+	ft_putstrf("0x", count);
+	ft_putnbr_basef(adresse, "0123456789abcdef", count);
 }

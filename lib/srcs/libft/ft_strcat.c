@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/05/19 14:37:52 by maleca            #+#    #+#             */
+/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../libft.h"
 
-void	so_long(char **av)
+char	*ft_strcat(char *dst, char *src)
 {
-	char **map;
+	size_t	i;
+	size_t	j;
 
-	map = parse(av);
-
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	if (!dst || !src)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (dst[i])
+		i++;
+	while (src[j])
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	dst[i + j] = '\0';
+	return (dst);
 }

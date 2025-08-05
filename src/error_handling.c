@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/08/05 19:34:40 by maleca            #+#    #+#             */
+/*   Updated: 2025/08/05 23:29:26 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-void	so_long(char **av)
+void	error(char *err_msg)
 {
-	char **map;
-
-	map = parse(av);
-
+	ft_putendl_fd("Error\n", 2);
+	ft_putendl_fd(err_msg, 2);
+	exit(EXIT_FAILURE);
 }
 
-int	main(int ac, char **av)
+void	close_error(char *err_msg, int fd)
 {
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	close(fd);
+	error(err_msg);
+}
+
+void	free_error(char *err_msg, char **map)
+{
+	free_dtab(map);
+	error(err_msg);
 }

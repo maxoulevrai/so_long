@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:58:33 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/01 17:33:57 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/05 22:41:34 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 
 # include <stdio.h>
 # include <string.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -68,7 +72,6 @@ size_t	word_len(const char *str, char c);
 size_t	word_count(const char *str, char c);
 size_t	ft_strlcat(char *dst, const char *src, size_t siz);
 size_t	ft_strlcpy(char *dst, const char *src, size_t siz);
-
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
@@ -78,5 +81,19 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
+
+int		ft_printf(const char *str, ...);
+void	ft_putcharf(char c, size_t *count);
+void	ft_putstrf(char *str, size_t *count);
+void	ft_putnbrf(int n, size_t *count);
+void	ft_putaddyf(unsigned long long adresse, size_t *count);
+void	ft_putnbr_basef(unsigned long long nb, char *base, size_t *count);
+
+size_t	gnl_len(char *str);
+void	stash_cleanup(char **stash);
+char	*get_next_line(int fd);
+char	*ft_strchr_gnl(char *str, char c);
+char	*ft_strjoin_gnl(char *stash, char *buff);
+char	*read_and_store(int fd, char *stash, int *flag);
 
 #endif

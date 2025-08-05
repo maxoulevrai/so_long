@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbrf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/04/30 04:04:54 by maleca            #+#    #+#             */
+/*   Updated: 2025/05/03 17:09:23 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../ft_printf.h"
 
-void	so_long(char **av)
+void	ft_putnbrf(int n, size_t *count)
 {
-	char **map;
+	long	nb;
 
-	map = parse(av);
-
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	nb = (long)n;
+	if (nb < 0)
+	{
+		nb *= -1;
+		ft_putcharf('-', count);
+	}
+	if (nb > 9)
+	{
+		ft_putnbrf(nb / 10, count);
+		ft_putcharf(nb % 10 + '0', count);
+	}
+	else
+		ft_putcharf(nb % 10 + '0', count);
 }

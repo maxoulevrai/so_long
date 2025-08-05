@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstrf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/04/30 04:02:59 by maleca            #+#    #+#             */
+/*   Updated: 2025/05/03 16:57:58 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../ft_printf.h"
 
-void	so_long(char **av)
+void	ft_putstrf(char *str, size_t *count)
 {
-	char **map;
+	int	i;
 
-	map = parse(av);
-
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
+	if (!str)
+	{
+		ft_putstrf("(null)", count);
+		return ;
+	}
+	i = 0;
+	while (str[i])
+	{
+		(*count)++;
+		i++;
+	}
+	write(1, str, i);
 }

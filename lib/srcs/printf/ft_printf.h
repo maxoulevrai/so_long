@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:20 by maleca           ###   ########.fr       */
+/*   Created: 2025/04/30 03:29:44 by maleca            #+#    #+#             */
+/*   Updated: 2025/05/03 16:51:19 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	so_long(char **av)
-{
-	char **map;
+# include <stdarg.h>
+# include <unistd.h>
 
-	map = parse(av);
+int		ft_printf(const char *str, ...);
+void	ft_putcharf(char c, size_t *count);
+void	ft_putstrf(char *str, size_t *count);
+void	ft_putnbrf(int n, size_t *count);
+void	ft_putaddyf(unsigned long long adresse, size_t *count);
+void	ft_putnbr_basef(unsigned long long nb, char *base, size_t *count);
 
-}
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		error("Too few arguments");
-	if (ac > 2)
-		error("Too many arguments");
-	open_and_check(av);
-}
+#endif

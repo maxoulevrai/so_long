@@ -9,18 +9,26 @@ CYAN			= \e[36m
 RESET			= \e[m
 
 LIB = lib/libft.a
-
 SRCS = main.c \
-
 OBJS = $(SRCS:%.c=build/%.o)
-DEPS = $(OBJS:.o=.d)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLXFLAG = -Lmlx_linux -lmlx -lX11 -lXext
 
-MLX_DIR = mlx_linux/
-MLX_LIB = mlx_linux/libmlx.a
+ifeq ($(shell uname), Linux)
+	INCLUDES = -I/usr/include -Imlx
+else
+	INCLUDES = -I/opt/X11/include -Imlx
+endif
+
+MLX_DIR = mlx/
+MLX_LIB = mlx/libmlx_$(shell uname).a
+
+ifeq ($(shell uname), Linux)
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+else
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+endif
 
 all: $(NAME)
 
@@ -40,7 +48,7 @@ build:
 build/%.o: %.c
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling $<$(NO_COLOR)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 clean:
 	@echo "$(RED)Cleaning object files$(NO_COLOR)"
@@ -56,4 +64,3 @@ re: fclean all
 
 .PHONY: all clean fclean re 
 
--include $(DEPS)
