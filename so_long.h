@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/05 23:48:09 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/06 23:42:44 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ void	so_long(char **av);
 
 char	**parse(char **av);
 char	**open_and_duplicate(char **av);
-void	flood_fill(char **map_cpy, int x, int y, int info[2]);
+int		is_map_enclosed(char **map,int map_size[2]);
+int		is_map_solvable(char **map, int map_content[3], int map_size[2]);
 
-void	error(char *err_msg);
-void	close_error(char *err_msg, int fd);
-void	free_error(char *err_msg, char **map);
+void	print_error(char *err_msg);
+void	print_close_error(char *err_msg, int fd);
+void	print_free_error(char *err_msg, char **map);
+
+void	print_tab(char **zone);
 
 #endif
