@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/06 22:58:14 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/08 19:41:29 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	so_long(char **av)
 {
-	char **map;
+	t_map *map;
 
 	map = parse(av);
-	
 }
 
 int	main(int ac, char **av)
@@ -26,5 +25,6 @@ int	main(int ac, char **av)
 		print_error("Too few arguments");
 	if (ac > 2)
 		print_error("Too many arguments");
-	open_and_check(av);
+	so_long(av);
+	return (0);
 }

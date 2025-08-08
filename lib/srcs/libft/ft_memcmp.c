@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:31:03 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:37:31 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t siz)
 	}
 	return (ps1[i] - ps2[i]);
 }
-
-// int	main(void)
-// {
-// 	char	*s1 = "teste";
-// 	char	*s2 = "testex";
-
-// 	printf("%d\n", ft_memcmp(s1, s2, 6));
-// 	printf("%d\n", memcmp(s1, s2, 6));
-// 	return (0);
-// }

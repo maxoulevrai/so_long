@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:43:05 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:37:57 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,3 @@ char	*ft_substr(char const *src, unsigned int start, size_t len)
 	dst[i] = '\0';
 	return (dst);
 }
-
-// int	main(void)
-// {
-// 	char	*src = "0123456789";
-// 	char	*dst;
-
-// 	dst = ft_substr(src, 9, 10);
-// 	printf("%s\n", dst);
-// 	free(dst);
-// 	return (0);
-// }

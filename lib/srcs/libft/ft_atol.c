@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:33:52 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:36:41 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,3 @@ long	ft_atol(const char *nptr)
 	}
 	return (sign * nbr);
 }
-
-// int	main(void)
-// {
-// 	printf("%ld\n", ft_atol("-44"));
-// 	return (0);
-// }

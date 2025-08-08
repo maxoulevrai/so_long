@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:21 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:36:46 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,3 @@ char	*ft_itoa(int n)
 	}
 	return (convert);
 }
-
-// int main(int ac, char **av)
-// {
-// 	char	*convert;
-
-// 	(void)ac;
-// 	convert = ft_itoa(atol(av[1]));
-// 	printf("%s\n", convert);
-// 	free(convert);
-// 	return (0);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:13:22 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:37:54 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,3 @@ char	*ft_strtrim(const char *src, const char *set)
 	dst[i] = '\0';
 	return (dst);
 }
-
-// int	main(void)
-// {
-// 	char	*dst;
-
-// 	dst = ft_strtrim("", "\n\t");
-// 	printf("%s\n", dst);
-// 	free(dst);
-// 	return (0);
-// }

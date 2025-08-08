@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:39:50 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 02:05:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:37:37 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,3 @@ char	**ft_split(const char *str, char c)
 	split[j] = NULL;
 	return (split);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	char	**split = NULL;
-// 	size_t	i = 0;
-
-// 	(void)ac;
-// 	split = ft_split(av[1], av[2][0]);
-// 	while (i <= 2)
-// 	{
-// 		printf("%s\n", split[i]);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (split[i])
-// 	{
-// 		free(split[i]);
-// 		i++;
-// 	}
-// 	free(split);
-// 	return (0);
-// }

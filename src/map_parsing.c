@@ -6,110 +6,139 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/06 23:49:00 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/08 23:12:33 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static int	*get_map_content(char **map)
+static void	init_map(t_map *map)
+{
+	map->area = NULL;
+	map->heigth = 0;
+	map->width = 0;
+	map->c_count = 0;
+	map->e_pos.x = 0;
+	map->e_pos.y = 0;
+	map->p_pos.x = 0;
+	map->p_pos.y = 0;
+}
+
+static int	check_ext(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	i -= 5;
+	if (!ft_strcmp(&str[i], ".ber"))
+		return (0);
+	return (1);
+}
+
+static void	get_map_content(t_map *map, int map_content[2])
 {
 	t_point	point;
-	int		map_content[3];
 
 	map_content[0] = 0;
 	map_content[1] = 0;
-	map_content[2] = 0;
 	point.y = 0;
-	while (map[point.y])
+	while (map->area[point.y])
 	{
 		point.x = 0;
-		while (map[point.y][point.x])
+		while (map->area[point.y][point.x])
 		{
-			if (map[point.y][point.x] == 'C')
+			if (map->area[point.y][point.x] == 'C')
+				map->c_count += 1;
+			if (map->area[point.y][point.x] == 'E')
+			{
 				map_content[0] += 1;
-			if (map[point.y][point.x] == 'E')
+			}
+			if (map->area[point.y][point.x] == 'P')
 				map_content[1] += 1;
-			if (map[point.y][point.x] == 'P')
-				map_content[2] += 1;
 			point.x++;
 		}
 		point.y++;
 	}
-	if (map_content[0] < 1 || map_content[1] != 1 || map_content[2] != 1)
+	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
 		print_free_error("invalid map components count", map);
-	return (map_content);
 }
 
-static void	get_map_size(char **av, int map_size[2])
+static void	get_map_size(char **av, t_map *map)
 {
 	char	*line;
 	int		fd;
 
-	map_size[0] = 0;
-	map_size[1] = 0;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		print_error("failed loading the map");
 	line = get_next_line(fd);
-	map_size[0] = ft_strlen(line) - 1;
+	map->width = ft_strlen(line);
+	if (line[map->width] == '\n')
+		map->width -= 1;
 	while (line)
 	{
-		if (ft_strlen(line) - 1 != map_size[0])
+		free(line);
+		line = get_next_line(fd);
+		if ()
+		if (ft_strlen(line) != map->width) // probleme size quand \n present
 		{
 			free(line);
 			print_close_error("unconsistant collumn count", fd);
 		}
-		map_size[1]++;
-		free(line);
-		line = get_next_line(fd);
+		map->heigth++;
 	}
 	free(line);
 	close(fd);
 }
 
-static int	is_map_valid(char **map)
+t_map	*open_and_duplicate(char **av)
 {
-	int	*map_content;
-	int	*map_size;
-
-	get_map_size(map, map_size);
-	if (!is_map_enclosed(map, map_size))
-		print_free_error("map is not enclosed properly", map);
-	if (!is_char_valid(map))
-		print_free_error("unrecognized char in map", map);
-	map_content = get_map_content(map);
-	map_content[1] = 0;
-	if (!is_map_solvable(map, map_content, map_size))
-		print_free_error("map is not solvable", map);
-}
-
-char	**open_and_duplicate(char **av)
-{
-	int		map_size[2];
+	t_map	*map;
 	int		fd;
 	int		i;
-	char	**map;
-	char	*line;
 	
-	get_map_size(av, map_size);
-	map = malloc(sizeof(char *) * (map_size[1] + 1));
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	init_map(map);
 	fd = open(av[1], O_RDWR);
 	if (fd < 0)
 		print_error("failed loading the map");
+	get_map_size(av, map);
+	map->area = malloc(sizeof(char *) * (map->heigth + 1));
+	if (!map->area)
+		return (NULL);
 	i = -1;
-	map[++i] = get_next_line(fd);
-	while (line)
-		map[++i] = get_next_line(fd);
+	map->area[++i] = get_next_line(fd);
+	while (map->area[i])
+		map->area[++i] = get_next_line(fd);
+	map->area[i] = NULL;
 	close(fd);
 	return (map);
 }
 
-char	**parse(char **av)
+t_map	*parse(char **av)
 {
-	char **map;
+	t_map	*map;
+	int		map_content[2];
 	
+	// map = NULL;
+	// init_map(map);
 	map = open_and_duplicate(av);
-	if (!is_map_valid(map))
+	map_content[0] = 0;
+	map_content[1] = 0;
+	if (!check_ext(av[1]))
 		print_free_error("invalid map", map);
+	if (map->heigth == map->width)
+		print_free_error("map is not rectangular", map);
+	if (!is_map_enclosed(map))
+		print_free_error("map is not enclosed properly", map);
+	if (!is_char_valid(map))
+		print_free_error("unrecognized char in map", map);
+	get_map_content(map, map_content);
+	if (!is_map_solvable(map, map_content))
+		print_free_error("map is not solvable", map);
+	return (map);
 }

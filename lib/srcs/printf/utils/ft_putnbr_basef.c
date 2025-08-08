@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_basef.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:46:51 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/02 01:59:17 by root             ###   ########.fr       */
+/*   Updated: 2025/08/08 19:38:02 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,3 @@ void	ft_putnbr_basef(unsigned long long nb, char *base, size_t *count)
 		ft_putnbr_basef(nb / base_len, base, count);
 	ft_putcharf(base[nb % base_len], count);
 }
-
-// int	main(int ac,  char **av)
-// {
-// 	size_t	count = 0;
-
-// 	(void)ac;
-// 	ft_putnbr_basef(atoi(av[1]), "0123456789abcdef", &count);
-// 	return (0);
-// }

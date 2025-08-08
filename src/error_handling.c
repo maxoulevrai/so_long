@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:34:40 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/06 22:21:38 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/08 18:39:59 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	print_close_error(char *err_msg, int fd)
 	print_error(err_msg);
 }
 
-void	print_free_error(char *err_msg, char **map)
+void	print_free_error(char *err_msg, t_map *map)
 {
-	free_dtab(map);
+	free(map);
 	print_error(err_msg);
 }
