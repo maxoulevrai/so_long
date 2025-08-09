@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/08 19:41:29 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/09 03:08:07 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	so_long(char **av)
+t_map	*so_long(char **av)
 {
 	t_map *map;
 
 	map = parse(av);
+	return (map);
 }
 
 int	main(int ac, char **av)

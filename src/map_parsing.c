@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/08 23:12:33 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/09 03:25:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,29 @@ static int	check_ext(char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	i -= 5;
-	if (!ft_strcmp(&str[i], ".ber"))
+	if (i < 4)
 		return (0);
-	return (1);
+	if (!ft_strcmp(&str[i - 4], ".ber"))
+		return (1);
+	return (0);
+}
+
+static void	check_map_char(t_map *map, int map_content[2], t_point point)
+{
+	if (map->area[point.y][point.x] == 'C')
+		map->c_count += 1;
+	if (map->area[point.y][point.x] == 'E')
+	{
+		map_content[0] += 1;
+		map->e_pos.x = point.x;
+		map->e_pos.y = point.y;
+	}
+	if (map->area[point.y][point.x] == 'P')
+	{
+		map_content[1] += 1;
+		map->p_pos.x = point.x;
+		map->p_pos.y = point.y;
+	}
 }
 
 static void	get_map_content(t_map *map, int map_content[2])
@@ -49,20 +68,27 @@ static void	get_map_content(t_map *map, int map_content[2])
 		point.x = 0;
 		while (map->area[point.y][point.x])
 		{
-			if (map->area[point.y][point.x] == 'C')
-				map->c_count += 1;
-			if (map->area[point.y][point.x] == 'E')
-			{
-				map_content[0] += 1;
-			}
-			if (map->area[point.y][point.x] == 'P')
-				map_content[1] += 1;
+			check_map_char(map, map_content, point);
 			point.x++;
 		}
 		point.y++;
 	}
 	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
 		print_free_error("invalid map components count", map);
+}
+
+static void	check_line_width(char *line, size_t width, int fd)
+{
+	size_t	len;
+
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		len--;
+	if (len != width)
+	{
+		free(line);
+		print_close_error("inconsistent column count", fd);
+	}
 }
 
 static void	get_map_size(char **av, t_map *map)
@@ -74,22 +100,22 @@ static void	get_map_size(char **av, t_map *map)
 	if (fd < 0)
 		print_error("failed loading the map");
 	line = get_next_line(fd);
+	if (!line)
+		print_close_error("empty map", fd);
 	map->width = ft_strlen(line);
-	if (line[map->width] == '\n')
-		map->width -= 1;
+	if (line[map->width - 1] == '\n')
+		map->width--;
+	map->heigth = 1;
 	while (line)
 	{
 		free(line);
 		line = get_next_line(fd);
-		if ()
-		if (ft_strlen(line) != map->width) // probleme size quand \n present
+		if (line)
 		{
-			free(line);
-			print_close_error("unconsistant collumn count", fd);
+			check_line_width(line, map->width, fd);
+			map->heigth++;
 		}
-		map->heigth++;
 	}
-	free(line);
 	close(fd);
 }
 
@@ -98,7 +124,7 @@ t_map	*open_and_duplicate(char **av)
 	t_map	*map;
 	int		fd;
 	int		i;
-	
+
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
@@ -123,16 +149,14 @@ t_map	*parse(char **av)
 {
 	t_map	*map;
 	int		map_content[2];
-	
-	// map = NULL;
-	// init_map(map);
+
 	map = open_and_duplicate(av);
 	map_content[0] = 0;
 	map_content[1] = 0;
 	if (!check_ext(av[1]))
-		print_free_error("invalid map", map);
-	if (map->heigth == map->width)
-		print_free_error("map is not rectangular", map);
+		print_free_error("wrong map extension", map);
+	if (map->heigth <= 3 && map->width <= 3)
+		print_free_error("map is too small", map);
 	if (!is_map_enclosed(map))
 		print_free_error("map is not enclosed properly", map);
 	if (!is_char_valid(map))

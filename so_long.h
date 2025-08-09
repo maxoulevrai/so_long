@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/08 22:51:14 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/09 03:08:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_map
 }				t_map;
 
 int		main(int ac, char **av);
-void	so_long(char **av);
+t_map	*so_long(char **av);
 
 t_map	*parse(char **av);
 t_map	*open_and_duplicate(char **av);
