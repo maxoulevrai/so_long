@@ -15,7 +15,8 @@ SRCS = main.c \
 		$(SRCS_DIR)map_parsing.c \
 		$(SRCS_DIR)error_handling.c \
 		$(SRCS_DIR)debug_utils.c \
-		$(SRCS_DIR)parsing_utils.c
+		$(SRCS_DIR)parsing_utils.c \
+		$(SRCS_DIR)so_long_utils.c
 
 OBJS = $(SRCS:%.c=build/%.o)
 
@@ -41,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB) $(MLX_LIB)
 	@echo "$(GREEN)Linking $@$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $(MLXFLAG) -o $@ $^
+	@$(CC) $(CFLAGS) $(MLX_FLAGS) -o $@ $^
 	@echo "$(GREEN)Build complete$(NO_COLOR)"
 
 $(LIB):

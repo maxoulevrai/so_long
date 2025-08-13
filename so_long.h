@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/12 17:15:25 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/13 22:39:14 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@
 # include <fcntl.h>
 # include "mlx/mlx.h"
 # include "lib/libft.h"
+
+#define KEY_ESC 65307
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
+#define KEY_UP 65362
+#define KEY_DOWN 65364
 
 typedef struct s_point {
 	int	x;
@@ -42,7 +52,7 @@ typedef struct s_map
 }				t_map;
 
 int		main(int ac, char **av);
-t_map	*so_long(char **av);
+void	so_long(char **av);
 
 t_map	*parse(char **av);
 t_map	*open_and_duplicate(char **av);
@@ -50,10 +60,12 @@ int		is_char_valid(t_map *area);
 int		is_map_enclosed(t_map *area);
 int		is_map_solvable(t_map *area, int map_content[2]);
 	
+void	free_map(t_map *map);
 void	print_error(char *err_msg);
 void	print_close_error(char *err_msg, int fd);
 void	print_free_error(char *err_msg, t_map *area);
 
 void	print_tab(char **zone);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

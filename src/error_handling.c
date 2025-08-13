@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:34:40 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/09 03:07:00 by root             ###   ########.fr       */
+/*   Updated: 2025/08/13 20:38:10 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_close_error(char *err_msg, int fd)
 	print_error(err_msg);
 }
 
-static void	free_map(t_map *map)
+void	free_map(t_map *map)
 {
 	int	i;
 
