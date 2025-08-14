@@ -6,17 +6,11 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/13 22:36:28 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/14 20:31:48 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}				t_vars;
 
 static int	key_press_hdl(int keycode, t_vars *vars)
 {
@@ -25,16 +19,26 @@ static int	key_press_hdl(int keycode, t_vars *vars)
 	return (0);
 }
 
+static int	close_win(t_vars *vars)
+{
+	(void)vars;
+	exit(0);
+}
+
 void	so_long(char **av)
 {
 	t_map	*map;
 	t_vars	vars;
 
 	map = parse(av);
-	free_map(map);
+	// free_map(map);
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Ayo");
-	mlx_hook(vars.win, 02, 1L<<0, key_press_hdl, &vars);
+	if (!vars.mlx)
+		print_free_error("failed starting mlx", map);
+	vars.win = mlx_new_window(vars.mlx, map->heigth * SIZE,
+		map->width * SIZE, "so_long");
+	mlx_key_hook(vars.win, key_press_hdl, &vars);
+	mlx_hook(vars.win, 17, 1L<<17, close_win, &vars);
 	mlx_loop(vars.mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/13 22:39:14 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/14 20:18:56 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 # include "mlx/mlx.h"
 # include "lib/libft.h"
 
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_LEFT 65361
-#define KEY_RIGHT 65363
-#define KEY_UP 65362
-#define KEY_DOWN 65364
+# define SIZE 32
+
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
 
 typedef struct s_point {
 	int	x;
@@ -50,6 +52,12 @@ typedef struct s_map
 	t_point		p_pos;
 	int			c_count;
 }				t_map;
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+}				t_vars;
 
 int		main(int ac, char **av);
 void	so_long(char **av);
