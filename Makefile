@@ -42,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB) $(MLX_LIB)
 	@echo "$(GREEN)Linking $@$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $(MLX_FLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^ $(MLX_FLAGS) 
 	@echo "$(GREEN)Build complete$(NO_COLOR)"
 
 $(LIB):

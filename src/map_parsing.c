@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/09 03:25:03 by root             ###   ########.fr       */
+/*   Updated: 2025/08/15 20:44:29 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ static void	init_map(t_map *map)
 	map->heigth = 0;
 	map->width = 0;
 	map->c_count = 0;
-	map->e_pos.x = 0;
-	map->e_pos.y = 0;
-	map->p_pos.x = 0;
-	map->p_pos.y = 0;
 }
 
 static int	check_ext(char *str)
@@ -38,25 +34,7 @@ static int	check_ext(char *str)
 	return (0);
 }
 
-static void	check_map_char(t_map *map, int map_content[2], t_point point)
-{
-	if (map->area[point.y][point.x] == 'C')
-		map->c_count += 1;
-	if (map->area[point.y][point.x] == 'E')
-	{
-		map_content[0] += 1;
-		map->e_pos.x = point.x;
-		map->e_pos.y = point.y;
-	}
-	if (map->area[point.y][point.x] == 'P')
-	{
-		map_content[1] += 1;
-		map->p_pos.x = point.x;
-		map->p_pos.y = point.y;
-	}
-}
-
-static void	get_map_content(t_map *map, int map_content[2])
+static void	get_map_content(t_map *map, int map_content[2], t_point *p_pos)
 {
 	t_point	point;
 
@@ -68,7 +46,15 @@ static void	get_map_content(t_map *map, int map_content[2])
 		point.x = 0;
 		while (map->area[point.y][point.x])
 		{
-			check_map_char(map, map_content, point);
+			if (map->area[point.y][point.x] == BALL)
+				map->c_count += 1;
+			if (map->area[point.y][point.x] == MAP_EXIT)
+				map_content[0] += 1;
+			if (map->area[point.y][point.x] == PLAYER)
+			{
+				*p_pos = point;
+				map_content[1] += 1;
+			}
 			point.x++;
 		}
 		point.y++;
@@ -148,6 +134,7 @@ t_map	*open_and_duplicate(char **av)
 t_map	*parse(char **av)
 {
 	t_map	*map;
+	t_point	p_pos;
 	int		map_content[2];
 
 	map = open_and_duplicate(av);
@@ -161,8 +148,8 @@ t_map	*parse(char **av)
 		print_free_error("map is not enclosed properly", map);
 	if (!is_char_valid(map))
 		print_free_error("unrecognized char in map", map);
-	get_map_content(map, map_content);
-	if (!is_map_solvable(map, map_content))
+	get_map_content(map, map_content, &p_pos);
+	if (!is_map_solvable(map, map_content, &p_pos))
 		print_free_error("map is not solvable", map);
 	return (map);
 }

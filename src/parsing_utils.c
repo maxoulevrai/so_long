@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 23:11:12 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/09 03:37:44 by root             ###   ########.fr       */
+/*   Updated: 2025/08/15 20:46:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ static void	flood_fill(char **map_cpy, int x, int y, int map_content[2])
 {
 	if (x < 0 || y < 0 || !map_cpy[y] || !map_cpy[y][x])
 		return ;
-	if (map_cpy[y][x] == 'E')
+	if (map_cpy[y][x] == MAP_EXIT)
 		map_content[1] = 1;
-	if (map_cpy[y][x] == '1' || map_cpy[y][x] == 'E' || map_cpy[y][x] == 'F')
+	if (map_cpy[y][x] == WALL || map_cpy[y][x] == MAP_EXIT
+		|| map_cpy[y][x] == FLOOR)
 		return ;
-	if (map_cpy[y][x] == 'C')
+	if (map_cpy[y][x] == BALL)
 		map_content[0]--;
 	map_cpy[y][x] = 'F';
 	flood_fill(map_cpy, x + 1, y, map_content);
@@ -53,7 +54,7 @@ static char	*duplicate_and_clean_line(char *line)
 	return (clean_line);
 }
 
-int	is_map_solvable(t_map *map, int map_content[2])
+int	is_map_solvable(t_map *map, int map_content[2], t_point *p_pos)
 {
 	char	**map_cpy;
 	int		i;
@@ -77,7 +78,7 @@ int	is_map_solvable(t_map *map, int map_content[2])
 		i++;
 	}
 	map_cpy[i] = NULL;
-	flood_fill(map_cpy, map->p_pos.x, map->p_pos.y, map_content);
+	flood_fill(map_cpy, p_pos->x, p_pos->y, map_content);
 	free_dtab(map_cpy);
 	if (map_content[0] == 0 && map_content[1] == 1)
 		return (1);
@@ -91,14 +92,14 @@ int	is_map_enclosed(t_map *map)
 	i = 0;
 	while (i < map->width)
 	{
-		if (map->area[0][i] != '1' || map->area[map->heigth - 1][i] != '1')
+		if (map->area[0][i] != WALL || map->area[map->heigth - 1][i] != WALL)
 			return (0);
 		i++;
 	}
 	i = 0;
 	while (i < map->heigth)
 	{
-		if (map->area[i][0] != '1' || map->area[i][map->width - 1] != '1')
+		if (map->area[i][0] != WALL || map->area[i][map->width - 1] != WALL)
 			return (0);
 		i++;
 	}
@@ -116,9 +117,9 @@ int	is_char_valid(t_map *map)
 		j = 0;
 		while (j < map->width)
 		{
-			if (map->area[i][j] != '0' && map->area[i][j] != '1'
-				&& map->area[i][j] != 'C' && map->area[i][j] != 'E'
-				&& map->area[i][j] != 'P')
+			if (map->area[i][j] != FLOOR && map->area[i][j] != WALL
+				&& map->area[i][j] != BALL && map->area[i][j] != MAP_EXIT
+				&& map->area[i][j] != PLAYER)
 				return (0);
 			j++;
 		}
