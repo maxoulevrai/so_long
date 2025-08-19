@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/15 20:53:23 by root             ###   ########.fr       */
+/*   Updated: 2025/08/19 04:32:00 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,57 @@
 
 static int	close_win(t_vars *vars)
 {
-	(void)vars;
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars);
 	exit(0);
 }
 
 static int	key_press_hdl(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESC)
+	{
 		mlx_destroy_window(vars->mlx, vars->win);
+		mlx_destroy_display(vars->mlx);
+		free(vars);
+		exit(0);
+	}
 	return (0);
+}
+static t_vars	*init(void)
+{
+	t_vars	*vars;
+
+	vars = malloc(sizeof(t_vars));
+	vars->mlx = NULL;
+	vars->win = NULL;
+	vars->map = NULL;
+	vars->obj_img = NULL;
+	vars->wall_img = NULL;
+	vars->floor_img = NULL;
+	vars->player_img = NULL;
+	vars->map_exit_img = NULL;
+	return (vars);
 }
 
 void	so_long(char **av)
 {
 	t_map	*map;
-	t_vars	vars;
-	char	*relative_path = "./sprites_xpm/";
+	t_vars	*vars;
 
 	map = parse(av);
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
+	vars = init();
+	if (!vars)
+		print_free_error("failed allocating vars", map);
+	vars->mlx = mlx_init();
+	if (!vars->mlx)
 		print_free_error("failed starting mlx", map);
-	vars.win = mlx_new_window(vars.mlx, map->heigth * IMG_HEIGHT,
-		map->width * IMG_HEIGHT, "so_long");
+	vars->win = mlx_new_window(vars->mlx, map->width * IMG_WIDTH,
+		map->heigth * IMG_HEIGHT, "so_long");
 	load_map(map, vars);
-	mlx_key_hook(vars.win, key_press_hdl, &vars);
-	mlx_hook(vars.win, 17, 1L<<17, close_win, &vars);
-	mlx_loop(vars.mlx);
+	mlx_key_hook(vars->win, key_press_hdl, vars);
+	mlx_hook(vars->win, 17, 1L<<17, close_win, vars);
+	mlx_loop(vars->mlx);
 }
 
 int	main(int ac, char **av)

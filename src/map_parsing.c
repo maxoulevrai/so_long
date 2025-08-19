@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/15 20:44:29 by root             ###   ########.fr       */
+/*   Updated: 2025/08/19 03:44:22 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	get_map_content(t_map *map, int map_content[2], t_point *p_pos)
 		point.x = 0;
 		while (map->area[point.y][point.x])
 		{
-			if (map->area[point.y][point.x] == BALL)
+			if (map->area[point.y][point.x] == OBJ)
 				map->c_count += 1;
 			if (map->area[point.y][point.x] == MAP_EXIT)
 				map_content[0] += 1;
@@ -63,9 +63,9 @@ static void	get_map_content(t_map *map, int map_content[2], t_point *p_pos)
 		print_free_error("invalid map components count", map);
 }
 
-static void	check_line_width(char *line, size_t width, int fd)
+static void	check_line_width(char *line, int width, int fd)
 {
-	size_t	len;
+	int	len;
 
 	len = ft_strlen(line);
 	if (line[len - 1] == '\n')

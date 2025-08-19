@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 23:11:12 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/15 20:46:37 by root             ###   ########.fr       */
+/*   Updated: 2025/08/19 03:44:32 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void	flood_fill(char **map_cpy, int x, int y, int map_content[2])
 	if (map_cpy[y][x] == MAP_EXIT)
 		map_content[1] = 1;
 	if (map_cpy[y][x] == WALL || map_cpy[y][x] == MAP_EXIT
-		|| map_cpy[y][x] == FLOOR)
+		|| map_cpy[y][x] == 'F')
 		return ;
-	if (map_cpy[y][x] == BALL)
+	if (map_cpy[y][x] == OBJ)
 		map_content[0]--;
 	map_cpy[y][x] = 'F';
 	flood_fill(map_cpy, x + 1, y, map_content);
@@ -87,7 +87,7 @@ int	is_map_solvable(t_map *map, int map_content[2], t_point *p_pos)
 
 int	is_map_enclosed(t_map *map)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < map->width)
@@ -108,8 +108,8 @@ int	is_map_enclosed(t_map *map)
 
 int	is_char_valid(t_map *map)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < map->heigth)
@@ -118,7 +118,7 @@ int	is_char_valid(t_map *map)
 		while (j < map->width)
 		{
 			if (map->area[i][j] != FLOOR && map->area[i][j] != WALL
-				&& map->area[i][j] != BALL && map->area[i][j] != MAP_EXIT
+				&& map->area[i][j] != OBJ && map->area[i][j] != MAP_EXIT
 				&& map->area[i][j] != PLAYER)
 				return (0);
 			j++;

@@ -16,7 +16,7 @@ SRCS = main.c \
 		$(SRCS_DIR)error_handling.c \
 		$(SRCS_DIR)debug_utils.c \
 		$(SRCS_DIR)parsing_utils.c \
-		$(SRCS_DIR)so_long_utils.c
+		$(SRCS_DIR)map_load.c
 
 OBJS = $(SRCS:%.c=build/%.o)
 
