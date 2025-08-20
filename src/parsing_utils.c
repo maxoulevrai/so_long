@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 23:11:12 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/19 03:44:32 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/20 20:05:07 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ static char	*duplicate_and_clean_line(char *line)
 	return (clean_line);
 }
 
-int	is_map_solvable(t_map *map, int map_content[2], t_point *p_pos)
+int	is_map_solvable(t_map *map, int map_content[2])
 {
 	char	**map_cpy;
+	t_point	*p_pos;
 	int		i;
 
 	map_cpy = malloc(sizeof(char *) * (map->heigth + 1));
@@ -77,6 +78,7 @@ int	is_map_solvable(t_map *map, int map_content[2], t_point *p_pos)
 		}
 		i++;
 	}
+	p_pos = &map->p_pos;
 	map_cpy[i] = NULL;
 	flood_fill(map_cpy, p_pos->x, p_pos->y, map_content);
 	free_dtab(map_cpy);

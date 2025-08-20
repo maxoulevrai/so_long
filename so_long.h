@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/19 04:24:33 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/20 20:21:32 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_map
 	int				heigth;
 	int				width;
 	int				c_count;
+	t_point			p_pos;
+	t_point			e_pos;
 }				t_map;
 
 typedef struct s_vars
@@ -73,21 +75,20 @@ typedef struct s_vars
 
 
 int		main(int ac, char **av);
-void	so_long(char **av);
 
 t_map	*parse(char **av);
 t_map	*open_and_duplicate(char **av);
 int		is_char_valid(t_map *area);
 int		is_map_enclosed(t_map *area);
-int		is_map_solvable(t_map *area, int map_content[2], t_point *p_pos);
+int		is_map_solvable(t_map *area, int map_content[2]);
 
-void	load_map(t_map *map, t_vars *vars);
+void	load_map(t_vars *vars);
+void	load_sprites(t_vars *vars);
 
-void	free_map(t_map *map);
 void	print_error(char *err_msg);
-void	print_close_error(char *err_msg, int fd);
-void	print_free_error(char *err_msg, t_map *area);
-
-void	print_tab(char **zone);
+void	close_fd_error(char *err_msg, int fd);
+void	free_map_error(char *err_msg, t_map *map);
+void	free_vars_error(char *err_msg, t_vars *vars);
+void	destroy_img(t_vars *vars);
 
 #endif

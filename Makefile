@@ -14,14 +14,13 @@ LIB = lib/libft.a
 SRCS = main.c \
 		$(SRCS_DIR)map_parsing.c \
 		$(SRCS_DIR)error_handling.c \
-		$(SRCS_DIR)debug_utils.c \
 		$(SRCS_DIR)parsing_utils.c \
 		$(SRCS_DIR)map_load.c
 
 OBJS = $(SRCS:%.c=build/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx

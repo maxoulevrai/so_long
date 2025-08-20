@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/19 03:44:22 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/20 20:08:01 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ static void	init_map(t_map *map)
 	map->heigth = 0;
 	map->width = 0;
 	map->c_count = 0;
+	map->p_pos.x = 0;
+	map->p_pos.y = 0;
+	map->e_pos.x = 0;
+	map->e_pos.y = 0;
 }
 
 static int	check_ext(char *str)
@@ -34,12 +38,10 @@ static int	check_ext(char *str)
 	return (0);
 }
 
-static void	get_map_content(t_map *map, int map_content[2], t_point *p_pos)
+static void	get_map_content(t_map *map, int map_content[2])
 {
 	t_point	point;
 
-	map_content[0] = 0;
-	map_content[1] = 0;
 	point.y = 0;
 	while (map->area[point.y])
 	{
@@ -49,18 +51,19 @@ static void	get_map_content(t_map *map, int map_content[2], t_point *p_pos)
 			if (map->area[point.y][point.x] == OBJ)
 				map->c_count += 1;
 			if (map->area[point.y][point.x] == MAP_EXIT)
+			{
+				map->e_pos = point;
 				map_content[0] += 1;
+			}
 			if (map->area[point.y][point.x] == PLAYER)
 			{
-				*p_pos = point;
+				map->p_pos = point;
 				map_content[1] += 1;
 			}
 			point.x++;
 		}
 		point.y++;
 	}
-	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
-		print_free_error("invalid map components count", map);
 }
 
 static void	check_line_width(char *line, int width, int fd)
@@ -73,7 +76,7 @@ static void	check_line_width(char *line, int width, int fd)
 	if (len != width)
 	{
 		free(line);
-		print_close_error("inconsistent column count", fd);
+		close_fd_error("inconsistent column count", fd);
 	}
 }
 
@@ -87,7 +90,7 @@ static void	get_map_size(char **av, t_map *map)
 		print_error("failed loading the map");
 	line = get_next_line(fd);
 	if (!line)
-		print_close_error("empty map", fd);
+		close_fd_error("empty map", fd);
 	map->width = ft_strlen(line);
 	if (line[map->width - 1] == '\n')
 		map->width--;
@@ -134,22 +137,23 @@ t_map	*open_and_duplicate(char **av)
 t_map	*parse(char **av)
 {
 	t_map	*map;
-	t_point	p_pos;
 	int		map_content[2];
 
 	map = open_and_duplicate(av);
 	map_content[0] = 0;
 	map_content[1] = 0;
 	if (!check_ext(av[1]))
-		print_free_error("wrong map extension", map);
+		free_map_error("wrong map extension", map);
 	if (map->heigth <= 3 && map->width <= 3)
-		print_free_error("map is too small", map);
+		free_map_error("map is too small", map);
 	if (!is_map_enclosed(map))
-		print_free_error("map is not enclosed properly", map);
+		free_map_error("map is not enclosed properly", map);
 	if (!is_char_valid(map))
-		print_free_error("unrecognized char in map", map);
-	get_map_content(map, map_content, &p_pos);
-	if (!is_map_solvable(map, map_content, &p_pos))
-		print_free_error("map is not solvable", map);
+		free_map_error("unrecognized char in map", map);
+	get_map_content(map, map_content);
+	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
+		free_map_error("invalid map components count", map);
+	if (!is_map_solvable(map, map_content))
+		free_map_error("map is not solvable", map);
 	return (map);
 }
