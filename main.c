@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/20 20:24:25 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/21 19:07:47 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,16 @@ static int	close_win(t_vars *vars)
 
 static int	key_press_hdl(int keycode, t_vars *vars)
 {
+	t_point	*player_ptr;
+
+	player_ptr->x = &vars->map->p_pos.x;
+	player_ptr->y = &vars->map->p_pos.y;
 	if (keycode == KEY_ESC)
 		close_win(vars);
-	
+	else if (keycode == KEY_W && vars->map->area[player_ptr->y][player_ptr->x + 1] != WALL)
+		player_ptr->x++;
+	if (vars->map->p_pos.x != player_ptr->x && vars->map->p_pos.y != player_ptr->y)
+		update_display(vars, player_ptr);
 	return (0);
 }
 
