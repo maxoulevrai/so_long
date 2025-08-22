@@ -88,7 +88,7 @@ $(BUILD_DIR):
 
 $(BUILD_DIR)%.o: %.c | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
-	@echo "$(YELLOW)Compiling $<$(RESET)"
+# 	@echo "$(YELLOW)Compiling $<$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 lib: $(LIB)
