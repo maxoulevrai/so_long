@@ -6,25 +6,13 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/20 20:08:01 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:05:57 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	init_map(t_map *map)
-{
-	map->area = NULL;
-	map->heigth = 0;
-	map->width = 0;
-	map->c_count = 0;
-	map->p_pos.x = 0;
-	map->p_pos.y = 0;
-	map->e_pos.x = 0;
-	map->e_pos.y = 0;
-}
-
-static int	check_ext(char *str)
+int	check_ext(char *str)
 {
 	int	i;
 
@@ -38,7 +26,7 @@ static int	check_ext(char *str)
 	return (0);
 }
 
-static void	get_map_content(t_map *map, int map_content[2])
+void	get_map_content(t_map *map, int map_content[2])
 {
 	t_point	point;
 
@@ -80,12 +68,12 @@ static void	check_line_width(char *line, int width, int fd)
 	}
 }
 
-static void	get_map_size(char **av, t_map *map)
+static void	get_map_size(char *map_file, t_map *map)
 {
 	char	*line;
 	int		fd;
 
-	fd = open(av[1], O_RDONLY);
+	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		print_error("failed loading the map");
 	line = get_next_line(fd);
@@ -108,7 +96,7 @@ static void	get_map_size(char **av, t_map *map)
 	close(fd);
 }
 
-t_map	*open_and_duplicate(char **av)
+t_map	*open_and_duplicate(char *map_file)
 {
 	t_map	*map;
 	int		fd;
@@ -118,10 +106,10 @@ t_map	*open_and_duplicate(char **av)
 	if (!map)
 		return (NULL);
 	init_map(map);
-	fd = open(av[1], O_RDWR);
+	fd = open(map_file, O_RDWR);
 	if (fd < 0)
 		print_error("failed loading the map");
-	get_map_size(av, map);
+	get_map_size(map_file, map);
 	map->area = malloc(sizeof(char *) * (map->heigth + 1));
 	if (!map->area)
 		return (NULL);
@@ -131,29 +119,5 @@ t_map	*open_and_duplicate(char **av)
 		map->area[++i] = get_next_line(fd);
 	map->area[i] = NULL;
 	close(fd);
-	return (map);
-}
-
-t_map	*parse(char **av)
-{
-	t_map	*map;
-	int		map_content[2];
-
-	map = open_and_duplicate(av);
-	map_content[0] = 0;
-	map_content[1] = 0;
-	if (!check_ext(av[1]))
-		free_map_error("wrong map extension", map);
-	if (map->heigth <= 3 && map->width <= 3)
-		free_map_error("map is too small", map);
-	if (!is_map_enclosed(map))
-		free_map_error("map is not enclosed properly", map);
-	if (!is_char_valid(map))
-		free_map_error("unrecognized char in map", map);
-	get_map_content(map, map_content);
-	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
-		free_map_error("invalid map components count", map);
-	if (!is_map_solvable(map, map_content))
-		free_map_error("map is not solvable", map);
 	return (map);
 }

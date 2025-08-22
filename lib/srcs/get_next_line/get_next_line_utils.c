@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:07:45 by root              #+#    #+#             */
-/*   Updated: 2025/03/09 20:36:46 by root             ###   ########.fr       */
+/*   Updated: 2025/08/22 21:55:43 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ char	*ft_strjoin_gnl(char *stash, char *buf)
 		if (!stash)
 			return (NULL);
 	}
-	new_stash = malloc(sizeof(char) * (ft_strlen_gnl(stash) + ft_strlen_gnl(buf) + 1));
+	new_stash = malloc(sizeof(char)
+			*(ft_strlen_gnl(stash) + ft_strlen_gnl(buf) + 1));
 	if (!new_stash)
 		return (NULL);
 	i = -1;

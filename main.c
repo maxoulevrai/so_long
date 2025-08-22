@@ -6,13 +6,13 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/21 19:07:47 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:02:16 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	close_win(t_vars *vars)
+int	close_win(t_vars *vars)
 {
 	if (vars->map)
 		free_dtab(vars->map->area);
@@ -29,19 +29,41 @@ static int	close_win(t_vars *vars)
 	exit(EXIT_SUCCESS);
 }
 
-static int	key_press_hdl(int keycode, t_vars *vars)
+void	init_map(t_map *map)
 {
-	t_point	*player_ptr;
+	map->area = NULL;
+	map->heigth = 0;
+	map->width = 0;
+	map->moves = 0;
+	map->c_count = 0;
+	map->p_pos.x = 0;
+	map->p_pos.y = 0;
+	map->e_pos.x = 0;
+	map->e_pos.y = 0;
+}
 
-	player_ptr->x = &vars->map->p_pos.x;
-	player_ptr->y = &vars->map->p_pos.y;
-	if (keycode == KEY_ESC)
-		close_win(vars);
-	else if (keycode == KEY_W && vars->map->area[player_ptr->y][player_ptr->x + 1] != WALL)
-		player_ptr->x++;
-	if (vars->map->p_pos.x != player_ptr->x && vars->map->p_pos.y != player_ptr->y)
-		update_display(vars, player_ptr);
-	return (0);
+t_map	*parse(char *map_file)
+{
+	t_map	*map;
+	int		map_content[2];
+
+	map = open_and_duplicate(map_file);
+	map_content[0] = 0;
+	map_content[1] = 0;
+	if (!check_ext(map_file))
+		free_map_error("wrong map extension", map);
+	if (map->heigth <= 3 && map->width <= 3)
+		free_map_error("map is too small", map);
+	if (!is_map_enclosed(map))
+		free_map_error("map is not enclosed properly", map);
+	if (!is_char_valid(map))
+		free_map_error("unrecognized char in map", map);
+	get_map_content(map, map_content);
+	if (map->c_count < 1 || map_content[0] != 1 || map_content[1] != 1)
+		free_map_error("invalid map components count", map);
+	if (!is_map_solvable(map, map_content))
+		free_map_error("map is not solvable", map);
+	return (map);
 }
 
 static t_vars	*init(char **av)
@@ -51,7 +73,7 @@ static t_vars	*init(char **av)
 	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		print_error("failed allocating vars");
-	vars->map = parse(av);
+	vars->map = parse(av[1]);
 	if (!vars->map)
 		free_vars_error("failed allocating map", vars);
 	vars->mlx = mlx_init();
@@ -75,7 +97,7 @@ int	main(int ac, char **av)
 		print_error("Too many arguments");
 	vars = init(av);
 	load_map(vars);
-	mlx_key_hook(vars->win, key_press_hdl, vars);
+	mlx_hook(vars->win, 2, 1L << 0, key_press_hdl, vars);
 	mlx_hook(vars->win, 17, 1L << 17, close_win, vars);
 	mlx_loop(vars->mlx);
 	return (0);

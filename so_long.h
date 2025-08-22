@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/20 20:21:32 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:07:57 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_map
 	char			**area;
 	int				heigth;
 	int				width;
+	int				moves;
 	int				c_count;
 	t_point			p_pos;
 	t_point			e_pos;
@@ -70,20 +71,26 @@ typedef struct s_vars
 	void			*player_img;
 	void			*map_exit_img;
 	struct s_map	*map;
-
 }				t_vars;
-
 
 int		main(int ac, char **av);
 
-t_map	*parse(char **av);
-t_map	*open_and_duplicate(char **av);
-int		is_char_valid(t_map *area);
+// Parsing
+t_map	*parse(char *map_file);
+t_map	*open_and_duplicate(char *map_file);
+int		check_ext(char *str);
 int		is_map_enclosed(t_map *area);
+int		is_char_valid(t_map *area);
 int		is_map_solvable(t_map *area, int map_content[2]);
+void	init_map(t_map *map);
+void	get_map_content(t_map *map, int map_content[2]);
 
 void	load_map(t_vars *vars);
 void	load_sprites(t_vars *vars);
+int		is_valid(t_map *map, int new_pos_y, int new_pos_x);
+int		key_press_hdl(int keycode, t_vars *vars);
+void	update_display(t_vars *vars, t_point new_pos);
+int		close_win(t_vars *vars);
 
 void	print_error(char *err_msg);
 void	close_fd_error(char *err_msg, int fd);

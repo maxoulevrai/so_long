@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 23:11:12 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/20 20:05:07 by maleca           ###   ########.fr       */
+/*   Created: 2025/08/22 21:22:46 by maleca            #+#    #+#             */
+/*   Updated: 2025/08/22 21:43:11 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 static void	flood_fill(char **map_cpy, int x, int y, int map_content[2])
 {
-	if (x < 0 || y < 0 || !map_cpy[y] || !map_cpy[y][x])
+	char	current;
+
+	if (x < 0 || y < 0 || !map_cpy)
 		return ;
-	if (map_cpy[y][x] == MAP_EXIT)
-		map_content[1] = 1;
-	if (map_cpy[y][x] == WALL || map_cpy[y][x] == MAP_EXIT
-		|| map_cpy[y][x] == 'F')
+	if (!map_cpy[y])
 		return ;
-	if (map_cpy[y][x] == OBJ)
+	if (!map_cpy[y][x] || map_cpy[y][x] == WALL || map_cpy[y][x] == 'X')
+		return ;
+	current = map_cpy[y][x];
+	map_cpy[y][x] = 'X';
+	if (current == 'C')
 		map_content[0]--;
-	map_cpy[y][x] = 'F';
+	else if (current == 'E')
+		map_content[1] = 1;
 	flood_fill(map_cpy, x + 1, y, map_content);
 	flood_fill(map_cpy, x - 1, y, map_content);
 	flood_fill(map_cpy, x, y + 1, map_content);
@@ -70,12 +74,7 @@ int	is_map_solvable(t_map *map, int map_content[2])
 	{
 		map_cpy[i] = duplicate_and_clean_line(map->area[i]);
 		if (!map_cpy[i])
-		{
-			while (--i >= 0)
-				free(map_cpy[i]);
-			free(map_cpy);
-			return (0);
-		}
+			free_dtab(map_cpy);
 		i++;
 	}
 	p_pos = &map->p_pos;
