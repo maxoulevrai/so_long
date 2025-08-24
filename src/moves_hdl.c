@@ -6,16 +6,37 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 19:08:05 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/22 22:02:25 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/24 22:01:19 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	hdl_win(t_vars *vars)
+static void	hdl_win(t_vars *vars)
 {
 	printf("bravo !\n");
 	close_win(vars);
+}
+static void	hdl_obj(t_vars *vars, t_point new_pos)
+{
+	// void	*open_door_img;
+	// int		img_width;
+	// int		img_height;
+
+
+	vars->map->area[new_pos.y][new_pos.x] = 0;
+	vars->map->c_count--;
+	// if (vars->map->c_count == 0)
+	// {
+	// 	open_door_img = mlx_xpm_file_to_image(vars->mlx, OPEN_DOOR_XPM,
+	// 		&img_width, &img_height);
+	// 	if (!vars->wall_img)
+	// 		free_vars_error("failed loading open door sprite", vars);
+	// 	mlx_put_image_to_window(vars->mlx, vars->win,
+	// 		open_door_img, vars->map->e_pos.x
+	// 		* IMG_HEIGHT, vars->map->e_pos.y * IMG_WIDTH);
+	// 	// free(open_door_img);
+	// }
 }
 
 int	is_valid(t_map *map, int new_pos_y, int new_pos_x)
@@ -40,12 +61,8 @@ void	update_display(t_vars *vars, t_point new_pos)
 		&& vars->map->area[new_pos.y][new_pos.x] == MAP_EXIT)
 		return ;
 	if (vars->map->area[new_pos.y][new_pos.x] == OBJ)
-	{
-		vars->map->area[new_pos.y][new_pos.x] = 0;
-		vars->map->c_count--;
-	}
-	vars->map->moves++;
-	printf("movements: %d\n", vars->map->moves);
+		hdl_obj(vars, new_pos);
+	printf("movements: %d\n", vars->map->moves++);
 	mlx_put_image_to_window(vars->mlx, vars->win,
 		vars->floor_img, prev_pos.x * IMG_HEIGHT, prev_pos.y * IMG_WIDTH);
 	mlx_put_image_to_window(vars->mlx, vars->win,

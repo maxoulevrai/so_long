@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/22 22:07:57 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/24 22:00:22 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@
 # define PLAYER			'P'
 # define MAP_EXIT		'E'
 
-# define WALL_XMP		"sprites/wall.xpm"
-# define FLOOR_XMP		"sprites/floor.xpm"
-# define OBJ_XMP		"sprites/obj.xpm"
-# define PLAYER_XMP		"sprites/player.xpm"
-# define MAP_EXIT_XMP	"sprites/map_exit.xpm"
+# define WALL_XPM		"sprites/wall.xpm"
+# define FLOOR_XPM		"sprites/floor.xpm"
+# define OBJ_XPM		"sprites/obj.xpm"
+# define PLAYER_XPM		"sprites/player.xpm"
+# define OPEN_DOOR_XPM	"sprites/open_door.xpm"
+# define CLOSED_DOOR_XPM	"sprites/closed_door.xpm"
 
 typedef struct s_point {
 	int				x;
@@ -69,7 +70,7 @@ typedef struct s_vars
 	void			*floor_img;
 	void			*obj_img;
 	void			*player_img;
-	void			*map_exit_img;
+	void			*closed_door_img;
 	struct s_map	*map;
 }				t_vars;
 
@@ -83,6 +84,7 @@ int		is_map_enclosed(t_map *area);
 int		is_char_valid(t_map *area);
 int		is_map_solvable(t_map *area, int map_content[2]);
 void	init_map(t_map *map);
+void	init_vars(t_vars *vars);
 void	get_map_content(t_map *map, int map_content[2]);
 
 void	load_map(t_vars *vars);

@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:24:31 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/22 22:05:57 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/24 18:27:14 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_map	*open_and_duplicate(char *map_file)
 	init_map(map);
 	fd = open(map_file, O_RDWR);
 	if (fd < 0)
-		print_error("failed loading the map");
+		return (free(map), NULL);
 	get_map_size(map_file, map);
 	map->area = malloc(sizeof(char *) * (map->heigth + 1));
 	if (!map->area)

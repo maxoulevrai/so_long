@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:03:38 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/22 22:02:16 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/24 21:49:03 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,14 @@ int	close_win(t_vars *vars)
 	exit(EXIT_SUCCESS);
 }
 
-void	init_map(t_map *map)
-{
-	map->area = NULL;
-	map->heigth = 0;
-	map->width = 0;
-	map->moves = 0;
-	map->c_count = 0;
-	map->p_pos.x = 0;
-	map->p_pos.y = 0;
-	map->e_pos.x = 0;
-	map->e_pos.y = 0;
-}
-
 t_map	*parse(char *map_file)
 {
 	t_map	*map;
 	int		map_content[2];
 
 	map = open_and_duplicate(map_file);
+	if (!map)
+		return (NULL);
 	map_content[0] = 0;
 	map_content[1] = 0;
 	if (!check_ext(map_file))
@@ -63,6 +52,8 @@ t_map	*parse(char *map_file)
 		free_map_error("invalid map components count", map);
 	if (!is_map_solvable(map, map_content))
 		free_map_error("map is not solvable", map);
+	// if (!is_player_movable(map))
+	// 	free_map_error("player cannot move", map);
 	return (map);
 }
 
@@ -73,9 +64,10 @@ static t_vars	*init(char **av)
 	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		print_error("failed allocating vars");
+	init_vars(vars);
 	vars->map = parse(av[1]);
 	if (!vars->map)
-		free_vars_error("failed allocating map", vars);
+		free_vars_error("failed loading the map", vars);
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
 		free_vars_error("failed starting mlx", vars);
