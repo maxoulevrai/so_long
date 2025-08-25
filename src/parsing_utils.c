@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 21:22:46 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/22 21:43:11 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:14:05 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void	flood_fill(char **map_cpy, int x, int y, int map_content[2])
 	if (current == 'C')
 		map_content[0]--;
 	else if (current == 'E')
+	{
 		map_content[1] = 1;
+		return ;
+	}
 	flood_fill(map_cpy, x + 1, y, map_content);
 	flood_fill(map_cpy, x - 1, y, map_content);
 	flood_fill(map_cpy, x, y + 1, map_content);

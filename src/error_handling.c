@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:34:40 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/24 21:56:52 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:09:03 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	destroy_img(t_vars *vars)
 		mlx_destroy_image(vars->mlx, vars->player_img);
 	if (vars->closed_door_img)
 		mlx_destroy_image(vars->mlx, vars->closed_door_img);
+	if (vars->open_door_img)
+		mlx_destroy_image(vars->mlx, vars->open_door_img);
 }
 
 void	print_error(char *err_msg)

@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:24:42 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/24 21:53:25 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:12:06 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ static void	*id_sprite(t_vars *vars, int x, int y)
 	if (vars->map->area[y][x] == MAP_EXIT)
 		return (vars->closed_door_img);
 	return (NULL);
+}
+
+static void	load_open_door(t_vars *vars)
+{
+	int	img_width;
+	int	img_height;
+
+	vars->open_door_img = mlx_xpm_file_to_image(vars->mlx, OPEN_DOOR_XPM,
+			&img_width, &img_height);
+	if (!vars->open_door_img)
+		free_vars_error("failed loading open door sprite", vars);
 }
 
 void	load_sprites(t_vars *vars)
@@ -52,6 +63,7 @@ void	load_sprites(t_vars *vars)
 			&img_width, &img_height);
 	if (!vars->closed_door_img)
 		free_vars_error("failed loading closed door sprite", vars);
+	load_open_door(vars);
 }
 
 void	load_map(t_vars *vars)

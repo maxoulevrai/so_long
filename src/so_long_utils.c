@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 23:25:07 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/24 22:00:27 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:08:14 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_vars(t_vars *vars)
 	vars->wall_img = NULL;
 	vars->floor_img = NULL;
 	vars->player_img = NULL;
+	vars->open_door_img = NULL;
 	vars->closed_door_img = NULL;
 }
 

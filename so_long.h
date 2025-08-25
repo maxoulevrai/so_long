@@ -6,7 +6,7 @@
 /*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:02:30 by maleca            #+#    #+#             */
-/*   Updated: 2025/08/24 22:00:22 by maleca           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:19:52 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define SO_LONG_H
 
 # include <fcntl.h>
+# include <errno.h>
 # include "mlx/mlx.h"
 # include "lib/libft.h"
 
@@ -71,6 +72,7 @@ typedef struct s_vars
 	void			*obj_img;
 	void			*player_img;
 	void			*closed_door_img;
+	void			*open_door_img;
 	struct s_map	*map;
 }				t_vars;
 
